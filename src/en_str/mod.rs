@@ -4,6 +4,12 @@ pub mod en_str {
         Female,
         Male,
     }
+    #[derive(Clone, PartialEq)]
+    pub enum Type {
+        Urinal,
+        Stall,
+        FemaleStall,
+    }
 
     #[derive(Clone, PartialEq)]
     pub enum BathroomVariant {
@@ -17,5 +23,6 @@ pub mod en_str {
         pub time_remaining: u32,
         pub at_stall: bool,
         pub finished: bool,
+        pub stall_type: Type,
     }
 }
