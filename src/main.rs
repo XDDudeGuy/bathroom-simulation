@@ -8,7 +8,7 @@ use en_str::en_str::{Gender, BathroomVariant, Person};
 
 fn main() {
     let mut people: Vec<Person> = vec![];
-    for _ in 1..450 {
+    for _ in 1..(rand::random::<u32>()%400+100) {
         let gender: Gender;
         let variant: BathroomVariant;
 
@@ -35,24 +35,71 @@ fn main() {
             gender,
             variant,
             time_remaining,
-			at_stall: false
+			at_stall: false,
+            finished: false
         };
         people.push(person);
     }
     simulate(people);
 }
 
-fn simulate(people: Vec<Person>) {
+fn simulate(people: Vec<Person>) -> bool {
     /* 18 boys at a time, 9 girls at a time
      Feciating takes ~3 minutes
      Urinating takes ~45 seconds
      %50 of the students are girls the other half are boys
     */
-	let male_stalls = 9;
-	let urinals = 9;
-	let female_stalls = 9;
+	let mut male_stalls = 9;
+	let mut urinals = 9;
+	let mut female_stalls = 9;
+    let mut total_time = 300;
+    let random: u32 = rand::random(); 
 
-	for person in people {
-		
-	}
+    while total_time != 0 {
+        for mut person in people.clone() {
+            if total_time == 0 {
+                break
+            }
+            if person.finished {
+                continue
+            }
+            if person.at_stall {
+                person.time_remaining -= 1;
+                total_time -= 1;
+                continue
+            }
+            if person.gender == Gender::Female {
+                if female_stalls > 0 {
+                    female_stalls -= 1;
+                    person.at_stall = true;
+                }
+            } else {
+                if person.variant == BathroomVariant::Feciate {
+                    if male_stalls > 0 {
+                        male_stalls -= 1;
+                        person.at_stall = true;
+                    }
+                } else if urinals > 0 && random % 10 > 5 {
+                    urinals -= 1;
+                    person.at_stall = true;
+                } else if male_stalls > 0 && random % 10 <= 5 {
+                    male_stalls -= 1;
+                    person.at_stall = true;
+                }
+                total_time -= 1;
+                continue
+            }
+	    }
+    }
+    return check_satisfaction(people);
+}
+
+fn check_satisfaction(people: Vec<Person>) -> bool {
+    for person in people {
+        if person.finished != true {
+            println!("failed");
+            return false
+        }
+    }
+    true
 }
