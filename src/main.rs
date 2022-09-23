@@ -43,10 +43,10 @@ fn main() {
             };
             people.push(person);
         }
-        if !simulate(people) {
-            failures +=1;
-        } else {
+        if simulate(people) {
             success +=1;
+        } else {
+            failures +=1;
         }
         println!("\nFailures: {:?}\nSuccesses: {:?}", failures, success);
     }
