@@ -7,40 +7,49 @@ use en_str::en_str::{Gender, BathroomVariant, Person};
 */
 
 fn main() {
-    let mut people: Vec<Person> = vec![];
-    for _ in 1..(rand::random::<u32>()%400+100) {
-        let gender: Gender;
-        let variant: BathroomVariant;
+    let mut failures = 0;
+    let mut success = 0;
+    loop {
+        let mut people: Vec<Person> = vec![];
+        for _ in 1..(rand::random::<u32>()%400+100) {
+            let gender: Gender;
+            let variant: BathroomVariant;
 
-        let random_variant: u32 = rand::random();
-        let random_gender: u32 = rand::random();
+            let random_variant: u32 = rand::random();
+            let random_gender: u32 = rand::random();
 
-        if random_variant % 10 >= 9 {
-            variant = BathroomVariant::Feciate;
-        } else {
-            variant = BathroomVariant::Urinate;
+            if random_variant % 10 >= 9 {
+                variant = BathroomVariant::Feciate;
+            } else {
+                variant = BathroomVariant::Urinate;
+            }
+            if random_gender % 10 >= 5 {
+                gender = Gender::Male;
+            } else {
+                gender = Gender::Female;
+            }
+
+            let time_remaining: u32 = match variant.clone() {
+                BathroomVariant::Feciate => 180,
+                BathroomVariant::Urinate => 45,
+            };
+
+            let person = Person {
+                gender,
+                variant,
+                time_remaining,
+                at_stall: false,
+                finished: false
+            };
+            people.push(person);
         }
-        if random_gender % 10 >= 5 {
-            gender = Gender::Male;
+        if !simulate(people) {
+            failures +=1;
         } else {
-            gender = Gender::Female;
+            success +=1;
         }
-
-        let time_remaining: u32 = match variant.clone() {
-            BathroomVariant::Feciate => 180,
-            BathroomVariant::Urinate => 45,
-        };
-
-        let person = Person {
-            gender,
-            variant,
-            time_remaining,
-			at_stall: false,
-            finished: false
-        };
-        people.push(person);
+        println!("\nFailures: {:?}\nSuccesses: {:?}", failures, success);
     }
-    simulate(people);
 }
 
 fn simulate(people: Vec<Person>) -> bool {
@@ -55,8 +64,11 @@ fn simulate(people: Vec<Person>) -> bool {
     let mut total_time = 300;
     let random: u32 = rand::random(); 
 
-    while total_time != 0 {
+    while total_time > 0 {
         for mut person in people.clone() {
+            if person.time_remaining == 0 {
+                person.finished = true;
+            }
             if total_time == 0 {
                 break
             }
@@ -97,8 +109,7 @@ fn simulate(people: Vec<Person>) -> bool {
 fn check_satisfaction(people: Vec<Person>) -> bool {
     for person in people {
         if person.finished != true {
-            println!("failed");
-            return false
+            return person.finished
         }
     }
     true
