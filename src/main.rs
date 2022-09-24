@@ -74,7 +74,7 @@ fn simulate(people: Vec<Person>) -> bool {
     */
 	let mut male_stalls = 9;
 	let mut urinals = 9;
-	let mut female_stalls = 9;
+	let mut female_stalls = 10;
     let mut total_time = 300;
 
     while total_time > 0 {
