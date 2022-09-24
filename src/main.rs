@@ -141,7 +141,7 @@ fn simulate(people: Vec<Person>) -> bool {
             total_time -= 1;
         }
     }
-    // check if everyone who needed to use the bathrooms could
+    // check if everyone who needed to use the bathrooms can use the bathroom
     return check_satisfaction(people);
 }
 
