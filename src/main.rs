@@ -119,9 +119,9 @@ fn simulate(people: Vec<Person>) -> bool {
                     person.at_stall = true;
                 }
             }
-            total_time -= 1;
             continue
 	    }
+        total_time -= 1;
     }
     return check_satisfaction(people);
 }
