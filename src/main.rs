@@ -10,11 +10,6 @@ fn main() {
         // amount of people going to the bathroom
         let chance = rand::random::<u32>() % 400 + 51;
 
-        // debugging
-        /*
-            println!("{:?}", chance.clone());
-        */
-
         for _ in 1..chance {
             let gender: Gender;
             let variant: BathroomVariant;
