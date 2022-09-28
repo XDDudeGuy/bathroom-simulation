@@ -1,5 +1,5 @@
 # Bathroom Simulation
-A bathroom simulation written in rust for RCSHS SGA.  
+A bathroom simulation written in [rust](https://rust-lang.org) for RCSHS SGA.  
 To start, install [python](https://python.org) and [rust](https://rustup.rs)  
 Then press win+r to open the run menu.  
 Type in cmd.exe and press enter
