@@ -8,14 +8,9 @@ fn main() {
     loop {
         let mut people: Vec<Person> = vec![];
         // amount of people going to the bathroom
-        let chance = rand::random::<u32>() % 400 + 51;
+        let people_amt = rand::random::<u32>() % 400 + 51;
 
-        // debugging
-        /*
-            println!("{:?}", chance.clone());
-        */
-
-        for _ in 1..chance {
+        for _ in 1..people_amt {
             let gender: Gender;
             let variant: BathroomVariant;
 
@@ -35,10 +30,9 @@ fn main() {
                 gender = Gender::Female;
             }
 
-            // it takes 3 minutes or ~180 seconds to feciate, and to urinate it takes ~45 seconds
             let time_remaining: u32 = match variant.clone() {
-                BathroomVariant::Feciate => 180,
-                BathroomVariant::Urinate => 45,
+                BathroomVariant::Feciate => rand::random::<u32>()%100+81,
+                BathroomVariant::Urinate => rand::random::<u32>()%30+15,
             };
 
             let stall_type: Type;
@@ -75,7 +69,6 @@ fn main() {
     }
 }
 
-// (#simulate-function)
 fn simulate(people: Vec<Person>) -> bool {
     // the amount of stalls, urinals, and female stalls in the building along with the total time to do your business
     let mut male_stalls = 9;
