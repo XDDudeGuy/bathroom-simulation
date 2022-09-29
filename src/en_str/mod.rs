@@ -1,22 +1,22 @@
 pub mod en_str {
-    #[derive(Clone, PartialEq)]
+    #[derive(Clone, PartialEq, Copy)]
     pub enum Gender {
         Female,
         Male,
     }
-    #[derive(Clone, PartialEq)]
+    #[derive(Clone, PartialEq, Copy)]
     pub enum Type {
         Urinal,
         Stall,
         FemaleStall,
     }
 
-    #[derive(Clone, PartialEq)]
+    #[derive(Clone, PartialEq, Copy)]
     pub enum BathroomVariant {
         Feciate,
         Urinate,
     }
-    #[derive(Clone, PartialEq)]
+    #[derive(Clone, PartialEq, Copy)]
     pub struct Person {
         pub gender: Gender,
         pub variant: BathroomVariant,

@@ -30,7 +30,7 @@ fn main() {
                 gender = Gender::Female;
             }
 
-            let time_remaining: u32 = match variant.clone() {
+            let time_remaining: u32 = match variant {
                 BathroomVariant::Feciate => rand::random::<u32>()%100+81,
                 BathroomVariant::Urinate => rand::random::<u32>()%30+15,
             };
@@ -71,10 +71,10 @@ fn main() {
 
 fn simulate(people: Vec<Person>) -> bool {
     // the amount of stalls, urinals, and female stalls in the building along with the total time to do your business
-    let mut male_stalls = 9;
-    let mut urinals = 9;
-    let mut female_stalls = 10;
-    let mut total_time = 300;
+    let mut male_stalls: u8 = 9;
+    let mut urinals: u8 = 9;
+    let mut female_stalls: u8 = 10;
+    let mut total_time: u16 = 300;
 
     // while there is still time left
     while total_time > 0 {
