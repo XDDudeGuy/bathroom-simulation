@@ -71,8 +71,8 @@ fn main() {
 
 fn simulate(people: Vec<Person>) -> bool {
     // the amount of stalls, urinals, and female stalls in the building along with the total time to do your business
-    let mut male_stalls: u8 = 9;
-    let mut urinals: u8 = 9;
+    let mut male_stalls: u8 = 6;
+    let mut urinals: u8 = 6;
     let mut female_stalls: u8 = 10;
     let mut total_time: u16 = 300;
 
