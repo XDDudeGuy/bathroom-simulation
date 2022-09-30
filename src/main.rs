@@ -53,7 +53,7 @@ fn main() {
                 time_remaining,
                 at_stall: false,
                 finished: false,
-                stall_type,
+                stall_type
             };
             // adding that person to the list of people
             people.push(person);
