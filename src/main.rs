@@ -10,7 +10,7 @@ fn main() {
         // amount of people going to the bathroom
         let people_amt = rand::random::<u32>() % 400 + 51;
 
-        for _ in 1..people_amt {
+        for u in 1..people_amt {
             let gender: Gender;
             let variant: BathroomVariant;
 
@@ -53,23 +53,25 @@ fn main() {
                 time_remaining,
                 at_stall: false,
                 finished: false,
-                stall_type
+                stall_type,
+                index: u as usize -1 as usize,
             };
             // adding that person to the list of people
             people.push(person);
         }
         // simulating those people and checking if it was a success
-        if simulate(people) {
+        let percent = simulate(people);
+        if percent.clone() > 80.0 {
             success += 1;
         } else {
             failures += 1;
         }
         // printing to the console the amount of failures and successes
-        println!("\nFailures: {:?}\nSuccesses: {:?}", failures, success);
+        println!("\nFailures: {:?}\nSuccesses: {:?}\nPercentage: {:?}", failures, success, percent);
     }
 }
 
-fn simulate(people: Vec<Person>) -> bool {
+fn simulate(mut people: Vec<Person>) -> f32 {
     // the amount of stalls, urinals, and female stalls in the building along with the total time to do your business
     let mut male_stalls: u8 = 6;
     let mut urinals: u8 = 6;
@@ -80,7 +82,7 @@ fn simulate(people: Vec<Person>) -> bool {
     while total_time > 0 {
         for mut person in people.clone() {
             // if the person is done make person.finished true and free up their stall
-            if person.time_remaining == 0 {
+            if person.time_remaining <= 0 {
                 person.finished = true;
                 if person.gender == Gender::Female {
                     female_stalls += 1;
@@ -134,7 +136,8 @@ fn simulate(people: Vec<Person>) -> bool {
                 }
             }
             // if there are no stalls or urinals the person just has to wait
-            continue;
+            people[person.index] = person;
+            println!("{:?}", person);
         }
         // tick down the total time
         if total_time != 0 {
@@ -145,11 +148,15 @@ fn simulate(people: Vec<Person>) -> bool {
     return check_satisfaction(people);
 }
 
-fn check_satisfaction(people: Vec<Person>) -> bool {
+fn check_satisfaction(people: Vec<Person>) -> f32 {
+    let mut finished_people: f32 = 0.0;
+    let mut unfinished_people: f32 = 0.0;
     for person in people {
-        if person.finished != true {
-            return person.finished;
+        match person.finished {
+            true => finished_people += 1.0,
+            false => unfinished_people += 1.0
         }
     }
-    true
+    let percentage: f32 = finished_people/(unfinished_people+finished_people);
+    percentage*100.0
 }

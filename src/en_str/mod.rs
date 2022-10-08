@@ -1,22 +1,22 @@
 pub mod en_str {
-    #[derive(Clone, PartialEq, Copy)]
+    #[derive(Clone, PartialEq, Copy, Debug)]
     pub enum Gender {
         Female,
         Male,
     }
-    #[derive(Clone, PartialEq, Copy)]
+    #[derive(Clone, PartialEq, Copy, Debug)]
     pub enum Type {
         Urinal,
         Stall,
         FemaleStall,
     }
 
-    #[derive(Clone, PartialEq, Copy)]
+    #[derive(Clone, PartialEq, Copy, Debug)]
     pub enum BathroomVariant {
         Feciate,
         Urinate,
     }
-    #[derive(Clone, PartialEq, Copy)]
+    #[derive(Clone, PartialEq, Copy, Debug)]
     pub struct Person {
         pub gender: Gender,
         pub variant: BathroomVariant,
@@ -24,5 +24,6 @@ pub mod en_str {
         pub at_stall: bool,
         pub finished: bool,
         pub stall_type: Type,
+        pub index: usize,
     }
 }
