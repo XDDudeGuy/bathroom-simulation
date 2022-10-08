@@ -31,8 +31,8 @@ fn main() {
             }
 
             let time_remaining: u32 = match variant {
-                BathroomVariant::Feciate => rand::random::<u32>()%100+81,
-                BathroomVariant::Urinate => rand::random::<u32>()%30+15,
+                BathroomVariant::Feciate => rand::random::<u32>()%101+80,
+                BathroomVariant::Urinate => rand::random::<u32>()%31+15,
             };
 
             let stall_type: Type;
