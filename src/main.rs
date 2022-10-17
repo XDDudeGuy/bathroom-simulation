@@ -30,9 +30,11 @@ fn main() {
                 gender = Gender::Female;
             }
 
+            let time_to_get = rand::random::<u32>()%151+2;
+
             let time_remaining: u32 = match variant {
-                BathroomVariant::Feciate => rand::random::<u32>()%101+80,
-                BathroomVariant::Urinate => rand::random::<u32>()%31+15,
+                BathroomVariant::Feciate => (rand::random::<u32>()%101+80)+time_to_get,
+                BathroomVariant::Urinate => (rand::random::<u32>()%31+15)+time_to_get,
             };
 
             let stall_type: Type;
@@ -84,6 +86,7 @@ fn simulate(mut people: Vec<Person>) -> f32 {
             // if the person is done make person.finished true and free up their stall
             if person.time_remaining <= 0 {
                 person.finished = true;
+                person.at_stall = false;
                 if person.gender == Gender::Female {
                     female_stalls += 1;
                 } else if person.stall_type == Type::Stall {
@@ -91,6 +94,7 @@ fn simulate(mut people: Vec<Person>) -> f32 {
                 } else if person.stall_type == Type::Urinal {
                     urinals += 1;
                 }
+                people[person.index] = person;
             }
             // (just for safety) if there is no time left leave this loop and stop immediately
             if total_time == 0 {
@@ -103,6 +107,7 @@ fn simulate(mut people: Vec<Person>) -> f32 {
             // count down the time remaining for people who are at a stall
             if person.at_stall {
                 person.time_remaining -= 1;
+                people[person.index] = person;
                 continue;
             }
             // if the person is a girl and there are female stalls put them in a stall
@@ -137,7 +142,6 @@ fn simulate(mut people: Vec<Person>) -> f32 {
             }
             // if there are no stalls or urinals the person just has to wait
             people[person.index] = person;
-            println!("{:?}", person);
         }
         // tick down the total time
         if total_time != 0 {
