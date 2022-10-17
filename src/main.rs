@@ -72,7 +72,7 @@ fn main() {
         }
         // simulating those people and checking if it was a success
         let percent = simulate(people);
-        if percent.clone() > 80.0 {
+        if percent.clone() > 85.0 {
             success += 1;
         } else {
             failures += 1;
