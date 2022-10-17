@@ -117,8 +117,8 @@ fn simulate(mut people: Vec<Person>) -> f32 {
                 person.time_remaining = 180;
                 person.is_vaping = false;
                 match person.gender {
-                    Female => (),
-                    Male => person.stall_type = Type::Stall,
+                    Gender::Female => (),
+                    Gender::Male => person.stall_type = Type::Stall,
                 }
                 person.variant = BathroomVariant::Feciate;
             }
