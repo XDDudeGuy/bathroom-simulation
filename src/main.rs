@@ -47,9 +47,18 @@ fn main() {
             } else {
                 stall_type = Type::Urinal;
             }
+            
+            let vapor = rand::random::<u32>()%101;
+            let is_vaping: bool;
+            if vapor>75 {
+                is_vaping = true;
+            } else {
+                is_vaping = false;
+            }
 
             // creating a new person
             let person = Person {
+                is_vaping,
                 gender,
                 variant,
                 time_remaining,
@@ -104,6 +113,16 @@ fn simulate(mut people: Vec<Person>) -> f32 {
             if person.finished {
                 continue;
             }
+            if person.is_vaping {
+                person.time_remaining = 180;
+                person.is_vaping = false;
+                match person.gender {
+                    Female => (),
+                    Male => person.stall_type = Type::Stall,
+                }
+                person.variant = BathroomVariant::Feciate;
+            }
+
             // count down the time remaining for people who are at a stall
             if person.at_stall {
                 person.time_remaining -= 1;

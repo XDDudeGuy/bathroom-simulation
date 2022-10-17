@@ -18,6 +18,7 @@ pub mod en_str {
     }
     #[derive(Clone, PartialEq, Copy, Debug)]
     pub struct Person {
+        pub is_vaping: bool,
         pub gender: Gender,
         pub variant: BathroomVariant,
         pub time_remaining: u32,
