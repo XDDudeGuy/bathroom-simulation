@@ -1,6 +1,8 @@
 mod en_str;
 use en_str::en_str::{BathroomVariant, Gender, Person, Type};
+use memoize::memoize;
 
+#[memoize(SharedCache)]
 fn main() {
     // counters
     let mut failures = 0;
