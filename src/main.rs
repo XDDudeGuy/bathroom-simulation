@@ -2,7 +2,6 @@ mod en_str;
 use en_str::en_str::{BathroomVariant, Gender, Person, Type};
 use memoize::memoize;
 
-#[memoize(SharedCache)]
 fn main() {
     // counters
     let mut failures = 0;
@@ -84,6 +83,7 @@ fn main() {
     }
 }
 
+#[memoize(SharedCache)]
 fn simulate(mut people: Vec<Person>) -> f32 {
     // the amount of stalls, urinals, and female stalls in the building along with the total time to do your business
     let mut male_stalls: u8 = 6;
@@ -173,6 +173,7 @@ fn simulate(mut people: Vec<Person>) -> f32 {
     return check_satisfaction(people);
 }
 
+#[memoize(SharedCache)]
 fn check_satisfaction(people: Vec<Person>) -> f32 {
     let mut finished_people: f32 = 0.0;
     let mut unfinished_people: f32 = 0.0;
