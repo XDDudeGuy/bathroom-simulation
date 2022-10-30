@@ -1,12 +1,12 @@
 mod en_str;
 use en_str::en_str::{BathroomVariant, Gender, Person, Type};
-use memoize::memoize;
 
 fn main() {
     // counters
     let mut failures = 0;
     let mut success = 0;
-    loop {
+    let mut percents: Vec<f32> = vec![];
+    for _ in 0..10000 {
         let mut people: Vec<Person> = vec![];
         // amount of people going to the bathroom
         let people_amt = rand::random::<u32>() % 400 + 51;
@@ -78,12 +78,16 @@ fn main() {
         } else {
             failures += 1;
         }
-        // printing to the console the amount of failures and successes
-        println!("\nFailures: {:?}\nSuccesses: {:?}\nPercentage: {:?}", failures, success, percent);
+        percents.push(percent);
     }
+    let mut percent_avg: f32 = 0.0;
+    for percent in percents.clone() {
+        percent_avg = percent_avg + percent;
+    }
+    percent_avg = percent_avg/percents.len() as f32;
+    println!("\nFailures: {:?}\nSuccesses: {:?}\nAverage Percentage: {:?}", failures, success, percent_avg);
 }
 
-#[memoize(SharedCache)]
 fn simulate(mut people: Vec<Person>) -> f32 {
     // the amount of stalls, urinals, and female stalls in the building along with the total time to do your business
     let mut male_stalls: u8 = 6;
@@ -173,7 +177,6 @@ fn simulate(mut people: Vec<Person>) -> f32 {
     return check_satisfaction(people);
 }
 
-#[memoize(SharedCache)]
 fn check_satisfaction(people: Vec<Person>) -> f32 {
     let mut finished_people: f32 = 0.0;
     let mut unfinished_people: f32 = 0.0;
